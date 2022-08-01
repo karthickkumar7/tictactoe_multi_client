@@ -1,20 +1,27 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
-import { loginApi } from "./api";
+import { loginApi, registerApi } from "../api";
 
-// state
 const initialState = {
   isLoggedIn: false,
-  isSuccess: false,
-  isError: null,
   isLoading: false,
-  error: null,
+  isSuccess: false,
+  isError: false,
   success: null,
-  user: null,
-  sid: null,
+  error: null,
 };
 
-//asyncThunk
+export const register = createAsyncThunk(
+  "auth/register",
+  async (payload, thunkApi) => {
+    try {
+      const { data } = await registerApi(payload);
+      return data;
+    } catch (err) {
+      return thunkApi.rejectWithValue(err.data);
+    }
+  }
+);
 
 export const login = createAsyncThunk(
   "auth/login",
@@ -28,42 +35,47 @@ export const login = createAsyncThunk(
   }
 );
 
-// authSlice
-
 const authSlice = createSlice({
   name: "auth",
 
   initialState,
 
   reducers: {
-    updateSid: (state, { payload }) => {
-      state.sid = payload;
+    resetState: (state, { payload }) => {
+      state.isLoading = false;
+      state.isSuccess = false;
+      state.isError = false;
+      state.success = null;
+      state.error = null;
     },
   },
 
   extraReducers: {
-    [login.pending]: (state) => {
+    [login.pending]: (state, { payload }) => {
       state.isLoading = true;
+      state.isError = false;
+      state.isSuccess = false;
+      state.error = null;
+      state.success = null;
     },
     [login.fulfilled]: (state, { payload }) => {
+      state.isLoggedIn = true;
       state.isLoading = false;
       state.isSuccess = true;
       state.isError = false;
       state.error = null;
-      state.isLoggedIn = true;
-      // state.success = payload.msg;
-      state.user = payload.user;
+      state.success = payload.msg;
     },
     [login.rejected]: (state, { payload }) => {
       state.isLoading = false;
       state.isSuccess = false;
       state.isError = true;
       state.success = null;
-      state.error = payload.err;
+      state.error = payload.msg;
     },
   },
 });
 
-export const { updateSid } = authSlice.actions;
+export const { resetState } = authSlice.actions;
 
 export default authSlice.reducer;

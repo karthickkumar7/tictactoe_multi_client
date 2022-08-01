@@ -1,40 +1,27 @@
 import { useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 
-import { updateSid } from "../App/features/authSlice";
-import socket from "../socket.io";
-
-import Contact from "../Components/Contact";
-import TopNav from "../Components/TopNav";
-import Board from "../Components/Board";
-import Input from "../Components/Input";
+import Contacts from "../Components/Contacts";
+import Conversations from "../Components/Conversations";
 
 const Home = () => {
+  const { isLoggedIn } = useSelector((s) => s.auth);
   const navigate = useNavigate();
 
-  const { isLoggedIn } = useSelector((s) => s.auth);
-  const dispatch = useDispatch();
-
   useEffect(() => {
-    if (!isLoggedIn) {
-      navigate("/login");
+    if (isLoggedIn) {
+      navigate("/auth");
       return () => {};
     }
-
-    socket().on("me", (id) => dispatch(updateSid(id)));
   }, []);
 
   return (
     <div className="h-screen w-screen flex justify-center items-center bg-slate-200">
-      <div className="w-[1200px] h-[900px] bg-white rounded overflow-hidden flex">
-        <Contact />
-        <section className="h-full w-8/12 bg-white">
-          <TopNav />
-          <Board />
-          <Input />
-        </section>
-      </div>
+      <main className="h-[700px] w-[1200px] flex bg-white rounded-xl overflow-hidden">
+        <Contacts />
+        <Conversations />
+      </main>
     </div>
   );
 };

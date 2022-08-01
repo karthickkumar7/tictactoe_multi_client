@@ -1,21 +1,23 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
 const initialState = {
-  profile: false,
+  darkMode: false,
 };
 
-const settingSlice = createSlice({
+const settingsSlice = createSlice({
   name: "settings",
 
   initialState,
 
   reducers: {
-    showProfile: (state) => {
-      state.profile = !state.profile;
+    resetState: (state, { payload }) => {
+      state.darkMode = false;
     },
   },
+
+  extraReducers: {},
 });
 
-export const { showProfile } = settingSlice.actions;
+export const { resetState } = settingsSlice.actions;
 
-export default settingSlice.reducer;
+export default settingsSlice.reducer;

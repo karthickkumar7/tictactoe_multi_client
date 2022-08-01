@@ -1,7 +1,7 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import Home from "./Pages/Home";
-import Login from "./Pages/Login";
+import Auth from "./Pages/auth/Auth";
 
 const App = () => {
   return (
@@ -9,7 +9,8 @@ const App = () => {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/login" element={<Login />} />
+          <Route path="/auth" element={<Auth />} />
+          <Route path="/*" element={<h1>404 Page Not Found!</h1>} />
         </Routes>
       </BrowserRouter>
     </div>
