@@ -1,9 +1,9 @@
 import { configureStore } from "@reduxjs/toolkit";
 
-import auth from "./features/authSlice";
+import ttt from "./features/tttSlice";
 
 export default configureStore({
     reducer: {
-        auth,
+        ttt,
     },
 });
