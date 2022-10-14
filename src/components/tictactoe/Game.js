@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { setMsgs } from '../../app/features/tttSlice';
+import { useSelector } from 'react-redux';
 import { socket } from '../../socket.client';
 
 import Board from './Board';

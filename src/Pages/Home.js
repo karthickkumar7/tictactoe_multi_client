@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import Login from "../components/Login";
-import Game from "../components/tictactoe/Game";
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import Login from '../components/Login';
+import Game from '../components/tictactoe/Game';
 
-import { connectSocket, socket } from "../socket.client";
+import { connectSocket, socket } from '../socket.client';
 import {
     renderCells,
     setMsgs,
@@ -12,7 +12,7 @@ import {
     setTurn,
     setXo,
     updateCell,
-} from "../app/features/tttSlice";
+} from '../app/features/tttSlice';
 
 const winConditions = {
     1: [
@@ -71,7 +71,7 @@ const Home = () => {
     const createCells = () => {
         const els = [];
         for (let i = 0; i < 9; i++) {
-            els.push({ id: i + 1, children: "" });
+            els.push({ id: i + 1, children: '' });
         }
         return els;
     };
@@ -84,7 +84,7 @@ const Home = () => {
                         occupiedPCells.includes(el)
                     )
                 ) {
-                    socket.emit("won", { room, username });
+                    socket.emit('won', { room, username });
                 }
             }
         }
@@ -98,7 +98,7 @@ const Home = () => {
                         occupiedCCells.includes(el)
                     )
                 ) {
-                    socket.emit("won", { room, username });
+                    socket.emit('won', { room, username });
                 }
             }
         }
@@ -108,7 +108,7 @@ const Home = () => {
         dispatch(renderCells(createCells()));
         connectSocket();
 
-        socket.on("start", ({ first, players }) => {
+        socket.on('start', ({ first, players }) => {
             dispatch(setStart(true));
             dispatch(
                 setOppsName(
@@ -117,21 +117,21 @@ const Home = () => {
             );
             if (first === socket.id) {
                 dispatch(setTurn(true));
-                dispatch(setXo("X"));
+                dispatch(setXo('X'));
             } else {
                 dispatch(setTurn(false));
-                dispatch(setXo("O"));
+                dispatch(setXo('O'));
             }
         });
 
-        socket.on("update", (id) => {
-            console.log("update");
+        socket.on('update', (id) => {
+            console.log('update');
             dispatch(updateCell(id));
         });
 
-        socket.on("msg", (msg) => alert(msg));
+        socket.on('msg', (msg) => alert(msg));
 
-        socket.on("msgs", (msgs) => {
+        socket.on('msgs', (msgs) => {
             dispatch(setMsgs(msgs));
         });
     }, []);
