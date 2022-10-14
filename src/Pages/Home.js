@@ -12,7 +12,7 @@ import {
     setTurn,
     setXo,
     updateCell,
-} from '../app/features/tttSlice';
+} from '../App/features/tttSlice';
 
 const winConditions = {
     1: [
