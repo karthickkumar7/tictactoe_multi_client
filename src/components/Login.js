@@ -1,12 +1,12 @@
-import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useState } from 'react';
+import { useDispatch } from 'react-redux';
 
-import { setGo, setName, setRoomName } from "../app/features/tttSlice";
-import { socket } from "../socket.client";
+import { setGo, setName, setRoomName } from '../App/features/tttSlice';
+import { socket } from '../socket.client';
 
 const Login = () => {
-    const [username, setUsername] = useState("");
-    const [room, setRoom] = useState("");
+    const [username, setUsername] = useState('');
+    const [room, setRoom] = useState('');
     const dispatch = useDispatch();
 
     const loginHandler = () => {
@@ -14,7 +14,7 @@ const Login = () => {
         dispatch(setRoomName(room));
         dispatch(setGo());
 
-        socket.emit("go", { username, room });
+        socket.emit('go', { username, room });
     };
 
     return (

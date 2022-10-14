@@ -1,8 +1,8 @@
-import React from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
-import { markCell } from "../../app/features/tttSlice";
-import { socket } from "../../socket.client";
+import { markCell } from '../../App/features/tttSlice';
+import { socket } from '../../socket.client';
 
 const Board = () => {
     const { WIDTH, HEIGHT, cells } = useSelector((s) => s.ttt);
