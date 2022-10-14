@@ -1,8 +1,8 @@
-import { io } from "socket.io-client";
+import { io } from 'socket.io-client';
 
 let socket;
 const connectSocket = () => {
-    socket = io("http://localhost:5000");
+    socket = io('https://tttmulti.herokuapp.com/');
 };
 
 export { socket, connectSocket };
